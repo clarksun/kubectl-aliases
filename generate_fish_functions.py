@@ -13,9 +13,9 @@ if __name__ == '__main__':
         functions_dir = '{}/functions'.format(fish_conf_dir)
         makedirs(aliases_dir, exist_ok=True)
         makedirs(functions_dir, exist_ok=True)
-        aliases = [x.replace('alias', '').strip()
+        aliases = (x.replace('alias', '').strip()
                    for x in linecache.getlines('.kubectl_aliases')
-                   if x.startswith('alias')]
+                   if x.startswith('alias'))
         for alias in aliases:
             alias_name, alias_command = alias.split('=', 1)
             alias_command = alias_command[1:-1]
