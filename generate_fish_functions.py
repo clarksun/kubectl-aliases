@@ -4,6 +4,7 @@ import linecache
 from os import makedirs, symlink
 from os.path import isdir
 from pathlib import Path
+from textwrap import dedent
 
 if __name__ == '__main__':
     fish_conf_dir = '{}/.config/fish'.format(str(Path.home()))
@@ -18,12 +19,12 @@ if __name__ == '__main__':
         for alias in aliases:
             alias_name, alias_command = alias.split('=', 1)
             alias_command = alias_command[1:-1]
-            fish_function_template = '''
-function {}
-  echo (set_color blue){} $argv (set_color normal)
-  {} $argv
-end
-            '''
+            fish_function_template = dedent('''\
+                function {}
+                    echo (set_color blue){} $argv (set_color normal)
+                    {} $argv
+                end
+            ''')
             alias_file = '{}/{}.fish'.format(aliases_dir, alias_name)
             with open(alias_file, 'w') as f:
                 f.write(fish_function_template.format(
